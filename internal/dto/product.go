@@ -13,3 +13,9 @@ type ResponseCreateProduct struct {
 	SalePrice   *float64 `json:"sale_price"`
 	Price       float64  `json:"price"`
 }
+type RequestPatchProduct struct {
+	Name        OptionalString `json:"name"`
+	Description OptionalString `json:"description"`
+	SalePrice   OptionalFloat  `json:"sale_price"`
+	Price       OptionalFloat  `json:"price"`
+}

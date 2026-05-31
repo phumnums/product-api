@@ -2,12 +2,10 @@ package domain
 
 import (
 	"time"
-
-	"github.com/google/uuid"
 )
 
 type Product struct {
-	ID          uuid.UUID
+	ID          string
 	Name        string
 	Description *string
 	SalePrice   *float64

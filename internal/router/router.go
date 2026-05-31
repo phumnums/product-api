@@ -18,5 +18,6 @@ func registerProductRoutes(r *gin.Engine, productHandler *handler.ProductHandler
 	product := r.Group("/product")
 	{
 		product.POST("", productHandler.CreateProductHandler)
+		product.PATCH("/:id", productHandler.PatchProductHandler)
 	}
 }

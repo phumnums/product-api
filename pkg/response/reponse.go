@@ -29,13 +29,10 @@ func Error(c *gin.Context, statusCode int, errorCode string, data interface{}) {
 	})
 }
 
-func ValidationError(err error) []string {
-
-	validationError := err.(validator.ValidationErrors)
-
+func ValidationError(errs validator.ValidationErrors) []string {
 	var result []string
 
-	for _, errField := range validationError {
+	for _, errField := range errs {
 		field := errField.Field()
 
 		switch errField.Tag() {
