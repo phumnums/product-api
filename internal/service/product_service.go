@@ -36,7 +36,7 @@ func (s *ProductService) CreateProductService(ctx context.Context, req *dto.Requ
 		return nil, http.StatusBadRequest, errors.New("sale_price must be lower than price")
 	}
 
-	// check
+	// check blank and empty string
 	if req.Description != nil {
 		description := strings.TrimSpace(*req.Description)
 		if description == "" {

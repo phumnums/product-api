@@ -13,6 +13,11 @@ type Response struct {
 	Data       interface{} `json:"data"`
 }
 
+type ResponseNoData struct {
+	Successful bool   `json:"successful"`
+	ErrorCode  string `json:"error_code"`
+}
+
 func Success(c *gin.Context, statusCode int, data interface{}) {
 	c.JSON(statusCode, Response{
 		Successful: true,
@@ -26,6 +31,20 @@ func Error(c *gin.Context, statusCode int, errorCode string, data interface{}) {
 		Successful: false,
 		ErrorCode:  errorCode,
 		Data:       data,
+	})
+}
+
+func SuccessNoData(c *gin.Context, statusCode int) {
+	c.JSON(statusCode, ResponseNoData{
+		Successful: true,
+		ErrorCode:  "",
+	})
+}
+
+func ErrorNoData(c *gin.Context, statusCode int, errorCode string) {
+	c.JSON(statusCode, ResponseNoData{
+		Successful: false,
+		ErrorCode:  errorCode,
 	})
 }
 

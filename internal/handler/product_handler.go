@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -25,7 +24,6 @@ func (h *ProductHandler) CreateProductHandler(c *gin.Context) {
 	var req dto.RequestCreateProduct
 
 	if err := c.ShouldBindJSON(&req); err != nil {
-		log.Printf("err: %s", err)
 		if validationError, ok := err.(validator.ValidationErrors); ok {
 			response.Error(c, http.StatusBadRequest, "invalid request", response.ValidationError(validationError))
 			return
@@ -49,25 +47,14 @@ func (h *ProductHandler) PatchProductHandler(c *gin.Context) {
 	var req dto.RequestPatchProduct
 
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"successful": false,
-			"error_code": err.Error(),
-		})
+		response.ErrorNoData(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	status, err := h.productUsecase.PatchProductService(c, productID, &req)
 	if err != nil {
-		c.JSON(status, gin.H{
-			"successful": false,
-			"error_code": err.Error(),
-		})
+		response.ErrorNoData(c, status, err.Error())
 		return
 	}
-
-	c.JSON(status, gin.H{
-		"successful": true,
-		"error_code": nil,
-	})
-
+	response.SuccessNoData(c, status)
 }
