@@ -66,7 +66,18 @@ func (s *ProductService) PatchProductService(ctx context.Context, productID stri
 
 	// check product id
 	if productID == "" {
-		return http.StatusBadRequest, errors.New("product id is required")
+		return http.StatusBadRequest, errors.New("product_id is required")
+	}
+
+	// check name for update
+	if req.Name.Set {
+		if req.Name.Value != nil {
+			if strings.TrimSpace(*req.Name.Value) == "" {
+				return http.StatusBadRequest, errors.New("name is required")
+			}
+		} else {
+			return http.StatusBadRequest, errors.New("name is required")
+		}
 	}
 
 	// check and get product by id
@@ -84,23 +95,19 @@ func (s *ProductService) PatchProductService(ctx context.Context, productID stri
 		return http.StatusBadRequest, errors.New("invalid request")
 	}
 
-	oldPrice := product.Price
-
-	// check name for update
-	if req.Name.Set {
-		if req.Name.Value == nil || *req.Name.Value == "" {
-			return http.StatusBadRequest, errors.New("name is required")
-		}
-	}
-
 	// check description for update
 	if req.Description.Set {
-		if req.Description.Value == nil || *req.Description.Value == "" {
+		if req.Description.Value != nil {
+			if strings.TrimSpace(*req.Description.Value) == "" {
+				req.Description.Value = nil
+			}
+		} else {
 			req.Description.Value = nil
 		}
 	}
 
 	// check price for update
+	oldPrice := product.Price
 	if req.Price.Set {
 		if req.Price.Value == nil {
 			return http.StatusBadRequest, errors.New("price is required")

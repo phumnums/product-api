@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"errors"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 	"main.go/internal/domain"
@@ -84,7 +85,7 @@ func (r *productPostgresRepository) Update(ctx context.Context, productID string
 			updated_at = NOW()
 		WHERE id = $9
 	`
-	_, err := r.db.Exec(
+	tag, err := r.db.Exec(
 		ctx,
 		query,
 		req.Name.Set,
@@ -99,6 +100,10 @@ func (r *productPostgresRepository) Update(ctx context.Context, productID string
 	)
 	if err != nil {
 		return err
+	}
+
+	if tag.RowsAffected() == 0 {
+		return errors.New("product not found")
 	}
 
 	return nil
