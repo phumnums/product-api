@@ -138,6 +138,29 @@ func TestCreateProductService_SalePriceGreaterThanPrice(t *testing.T) {
 	assert.Equal(t, "sale_price must be lower than price", err.Error())
 }
 
+func TestCreateProductService_BlankName_ShouldReturnBasRequest(t *testing.T) {
+	repo := &mockProductRepository{
+		CreateFunc: func(ctx context.Context, product *domain.Product) (*domain.Product, error) {
+			return product, nil
+		},
+	}
+
+	svc := NewProductService(repo)
+
+	req := &dto.RequestCreateProduct{
+		Name:  "  ",
+		Price: 1680,
+	}
+
+	res, status, err := svc.CreateProductService(context.Background(), req)
+
+	require.Error(t, err)
+	require.Nil(t, res)
+
+	assert.Equal(t, http.StatusBadRequest, status)
+	assert.Equal(t, "name is required", err.Error())
+}
+
 func TestCreateProductService_RepositoryError(t *testing.T) {
 	repo := &mockProductRepository{
 		CreateFunc: func(ctx context.Context, product *domain.Product) (*domain.Product, error) {

@@ -44,6 +44,10 @@ func (s *ProductService) CreateProductService(ctx context.Context, req *dto.Requ
 		}
 	}
 
+	if strings.TrimSpace(req.Name) == "" {
+		return nil, http.StatusBadRequest, errors.New("name is required")
+	}
+
 	productData := domain.Product{
 		ID:          string(ulid.Make().String()),
 		Name:        req.Name,
