@@ -1,5 +1,13 @@
-version: '3.8'
 services:
+  app:
+    build: .
+    container_name: product-api
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+
   postgres:
     image: postgres:16
     container_name: postgres
