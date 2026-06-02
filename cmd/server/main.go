@@ -1,3 +1,8 @@
+// @title Product API
+// @version 1.0
+// @description Product Management API
+// @host localhost:3000
+// @BasePath /
 package main
 
 import (

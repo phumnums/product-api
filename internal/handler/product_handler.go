@@ -20,6 +20,18 @@ func NewProductHandler(productUsecase service.ProductUsecase) *ProductHandler {
 	}
 }
 
+// CreateProductHandler godoc
+//
+// @Summary Create Product
+// @Description Create new product
+// @Tags Product
+// @Accept json
+// @Produce json
+// @Param request body dto.RequestCreateProduct true "Create Product"
+// @Success 200 {object} dto.CreateProductSuccessResponseSwagger
+// @Failure 400 {object} dto.CreateProductValodationErrorSwagger
+// @Failure 500 {object} dto.CreateProductServerErrorSwagger
+// @Router /product [post]
 func (h *ProductHandler) CreateProductHandler(c *gin.Context) {
 	var req dto.RequestCreateProduct
 
@@ -42,6 +54,20 @@ func (h *ProductHandler) CreateProductHandler(c *gin.Context) {
 	response.Success(c, status, product)
 }
 
+// PatchProductHandler godoc
+//
+// @Summary Patch Product
+// @Description Update product partially
+// @Tags Product
+// @Accept json
+// @Produce json
+// @Param id path string true "Product ID"
+// @Param request body dto.RequestPatchProductSwagger true "Patch Product"
+// @Success 200 {object} dto.PatchProductSuccessResponseSwagger
+// @Failure 400 {object} dto.PatchProductBadRequestResponseSwagger
+// @Failure 404 {object} dto.PatchProductNotFoundResponseSwagger
+// @Failure 500 {object} dto.PatchProductServerErrorResponseSwagger
+// @Router /product/{id} [patch]
 func (h *ProductHandler) PatchProductHandler(c *gin.Context) {
 	productID := c.Param("id")
 	var req dto.RequestPatchProduct

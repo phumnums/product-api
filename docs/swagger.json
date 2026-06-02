@@ -1,0 +1,310 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Product Management API",
+        "title": "Product API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "paths": {
+        "/product": {
+            "post": {
+                "description": "Create new product",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Create Product",
+                "parameters": [
+                    {
+                        "description": "Create Product",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.RequestCreateProduct"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateProductSuccessResponseSwagger"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateProductBadRequestSwagger"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateProductServerErrorSwagger"
+                        }
+                    }
+                }
+            }
+        },
+        "/product/{id}": {
+            "patch": {
+                "description": "Update product partially",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Patch Product",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Product ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Patch Product",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.RequestPatchProductSwagger"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.PatchProductSuccessResponseSwagger"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.PatchProductBadRequestResponseSwagger"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/dto.PatchProductNotFoundResponseSwagger"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.PatchProductServerErrorResponseSwagger"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dto.CreateProductBadRequestSwagger": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "string",
+                    "example": "null"
+                },
+                "error_code": {
+                    "type": "string",
+                    "example": "invalid request"
+                },
+                "successful": {
+                    "type": "boolean",
+                    "example": false
+                }
+            }
+        },
+        "dto.CreateProductServerErrorSwagger": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "string",
+                    "example": "null"
+                },
+                "error_code": {
+                    "type": "string",
+                    "example": "server error"
+                },
+                "successful": {
+                    "type": "boolean",
+                    "example": false
+                }
+            }
+        },
+        "dto.CreateProductSuccessResponseSwagger": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "description": {
+                            "type": "string",
+                            "example": "Top-To-Toe Hair\u0026Body Bath"
+                        },
+                        "name": {
+                            "type": "string",
+                            "example": "Johnson's Baby"
+                        },
+                        "price": {
+                            "type": "number",
+                            "example": 1680
+                        },
+                        "sale_price": {
+                            "type": "number",
+                            "example": 1278
+                        }
+                    }
+                },
+                "error_code": {
+                    "type": "string",
+                    "example": ""
+                },
+                "successful": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.CreateProductValodationErrorSwagger": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "Name is required"
+                    ]
+                },
+                "error_code": {
+                    "type": "string",
+                    "example": "invalid request"
+                },
+                "successful": {
+                    "type": "boolean",
+                    "example": false
+                }
+            }
+        },
+        "dto.PatchProductBadRequestResponseSwagger": {
+            "type": "object",
+            "properties": {
+                "error_code": {
+                    "type": "string",
+                    "example": "invalid request"
+                },
+                "successful": {
+                    "type": "boolean",
+                    "example": false
+                }
+            }
+        },
+        "dto.PatchProductNotFoundResponseSwagger": {
+            "type": "object",
+            "properties": {
+                "error_code": {
+                    "type": "string",
+                    "example": "product not found"
+                },
+                "successful": {
+                    "type": "boolean",
+                    "example": false
+                }
+            }
+        },
+        "dto.PatchProductServerErrorResponseSwagger": {
+            "type": "object",
+            "properties": {
+                "error_code": {
+                    "type": "string",
+                    "example": "server error"
+                },
+                "successful": {
+                    "type": "boolean",
+                    "example": false
+                }
+            }
+        },
+        "dto.PatchProductSuccessResponseSwagger": {
+            "type": "object",
+            "properties": {
+                "error_code": {
+                    "type": "string",
+                    "example": ""
+                },
+                "successful": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.RequestCreateProduct": {
+            "type": "object",
+            "required": [
+                "name",
+                "price"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "example": "Top-To-Toe Hair\u0026Body Bath"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Johnson's Baby"
+                },
+                "price": {
+                    "type": "number",
+                    "minimum": 0,
+                    "example": 1680
+                },
+                "sale_price": {
+                    "type": "number",
+                    "minimum": 0,
+                    "example": 1278
+                }
+            }
+        },
+        "dto.RequestPatchProductSwagger": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "example": "New Description"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "New Product Name"
+                },
+                "price": {
+                    "type": "number",
+                    "example": 1700
+                },
+                "sale_price": {
+                    "type": "number",
+                    "example": 1200
+                }
+            }
+        }
+    }
+}
